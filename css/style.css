@@ -1,0 +1,15 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    font-family: Helvetica Neue, sans-serif;
+}
+
+body{
+    height: 100vh; 
+    background: linear-gradient(to left, #B24592 , #F15F79 )
+}
