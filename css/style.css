@@ -4,12 +4,23 @@
     padding: 0;
 }
 
+/* Set the whole page and body to a new font */
 html,
 body {
     font-family: Helvetica Neue, sans-serif;
 }
 
-body{
-    height: 100vh; 
-    background: linear-gradient(to left, #B24592 , #F15F79 )
+/* set background color */
+body {
+    /* height: 100vh; */
+    background: linear-gradient(to left, #B24592, #F15F79)
+}
+
+
+@media screen and (max-width: 500px) {
+    body {
+        height: auto;
+        /* min-height: 100vh; */
+        background: none;
+    }
 }
