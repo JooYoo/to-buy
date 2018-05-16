@@ -11,6 +11,7 @@ $(document).ready(function(){
             clearListDisplay= 'notepad__clear--display',
             noteCount       = 0;
         
+            
         function displayNotes(){ // 显示“本地存储”里的所有条目
             for(noteCount = 0; noteCount< localStorage.length; noteCount++){
                 var noteID = 'task-' + noteCount;
