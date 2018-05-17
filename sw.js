@@ -16,7 +16,7 @@ self.addEventListener('install', function(event) {
         'js/jquery.min.js',
         'js/note-list.js',
         'css/style.css',
-        
+        'favicon.ico',
         'manifest.json',
         'img/icon-60.png',
         'img/icon-114.png',
