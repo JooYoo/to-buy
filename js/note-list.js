@@ -4,7 +4,7 @@ $(document).ready(function () {
         // define variable 
         var $notepad = $('.notepad'),
             $noteList = $('.notepad__list')
-        $noteListItem = $('.notepad__list-item'),
+            $noteListItem = $('.notepad__list-item'),
             $noteForm = $('.notepad__form'),
             $noteFormInput = $('.notepad__form-input'),
             $clearList = $('.notepad__clear'),
@@ -60,8 +60,6 @@ $(document).ready(function () {
             noteCount = 0;
         }
 
-      
-
         function bindEvents() { // 把上面的方法连起来用。这是每次打开应用都会执行的一系列动作
             // 显示存储在“本地存储”的所有条目
             displayNotes();
@@ -77,12 +75,12 @@ $(document).ready(function () {
                 clearNotes();
             });
 
-            
+
         }
+
         bindEvents();
     }; // noteList
     noteList();
-
 
     function strikeSwitch(element) { //点按列表项目添加或去除删除线
         if (element.parent().is("strike")) {
@@ -92,16 +90,19 @@ $(document).ready(function () {
             element.wrap("<strike></strike>");
         }
     }
-
     
-    // 删除线
-    $('li').click(function (e) {
-        // capture clicked element by id
-        var targetID = e.target.id;
+    function getElement (element){ //找到目标元素，以供之后jQuery使用
+        var targetID = element.target.id;
+        console.log(targetID);
         var targetEle = document.getElementById(targetID);
         // save as jQery
-        var listItem = $(targetEle)
-        // call strike function
-        strikeSwitch(listItem);
+        var item = $(targetEle)
+        return item;
+    }
+
+    // 删除线
+    $('.notepad__list').on('click', function(e){
+        strikeSwitch(getElement(e));
     });
+    
 });// A page can't be manipulated safely until the document is "ready." 
