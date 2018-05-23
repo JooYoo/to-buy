@@ -28,7 +28,7 @@ $(document).ready(function () {
                 // 定义变量
                 // 确认todo项的ID是多少；确认todo项的内容是什么
                 var noteID = 'task-' + noteCount,
-                    task = $('#' + noteID),
+                   // task = $('#' + noteID), 
                     taskMessage = $noteFormInput.val();
 
                 // 将数据存储到“本地存储”中
@@ -74,8 +74,6 @@ $(document).ready(function () {
             $clearList.on('click', function () {
                 clearNotes();
             });
-
-
         }
 
         bindEvents();
