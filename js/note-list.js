@@ -35,8 +35,14 @@ $(document).ready(function () {
                 // 参数需要一个ID，当然也需要内容
                 localStorage.setItem(noteID, taskMessage);
 
-                // 添加条目到列表中
-                $noteList.append("<li class='notepad__list-item' id='" + noteID + "'>" + taskMessage + "</li>");
+                // 添加列表项内容：条目；按键
+                $noteList.append(
+                    "<li class='notepad__list-item' id='" + noteID + "'>" 
+                        + taskMessage + 
+                        "<button class='btnDele' id=deleID'" + noteID + "'>" +
+                        "X"+
+                        "</button>"+
+                    "</li>");
 
                 // 侦察DOM里的“clearAllBt”是否被注册了html class “clearListDisplay”
                 // 如果没有就加上这个类标签在该按钮上
@@ -101,6 +107,19 @@ $(document).ready(function () {
     // 删除线
     $('.notepad__list').on('click', function(e){
         strikeSwitch(getElement(e));
+    });
+
+    // 删除列表项
+    $('.notepad__list').on('click', function(e){
+        // capture clicked element by id
+        var targetID = e.target.id;
+        var targetEle = document.getElementById(targetID);
+        console.log("in on click");
+    // 找到ID包含有 "item" 的项目，并且删除
+    if((targetEle.parentElement.parentElement.id).indexOf("task")>=0){
+         document.getElementById(targetEle.parentElement.parentElement.id).remove();
+    }
+
     });
     
 });// A page can't be manipulated safely until the document is "ready." 

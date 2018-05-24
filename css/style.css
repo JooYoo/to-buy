@@ -174,3 +174,7 @@ body {
         position: static;
       }
     }
+
+    .btnDele{
+      padding: 15px 32px;
+    }
