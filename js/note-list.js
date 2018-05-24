@@ -13,12 +13,25 @@ $(document).ready(function () {
 
 
         function displayNotes() { // 显示“本地存储”里的所有条目
-            for (noteCount = 0; noteCount < localStorage.length; noteCount++) {
-                var noteID = 'task-' + noteCount;
-                // todo: refresh build button too
-                // build note list: 在DOM里面找到notepad__list，加上列表的项目。该项目包括id号，还有从本地存储里读取出来的项内容
-                $noteList.append("<li class='notepad__list-item' id='" + noteID + "'>" + localStorage.getItem(noteID) + "</li>");
-                // ？ show reset button: 无法理解
+
+         
+            // 遍历内存里的所有元素
+            for(var a in localStorage){
+                if(a === "length") // 在js会遍历出包括元素长度等信息，当侦测到时length时就不遍历了
+                    break;
+
+                console.log(a, ' = ', localStorage[a]);
+
+                var noteID = a;
+                //todo: 
+                $noteList.append( // 创建表格
+                    "<li class='notepad__list-item' id='" + noteID + "'>"
+                    + localStorage.getItem(noteID) +
+                    "<button class='btnDele' id=deleID'" + noteID + "'>" +
+                     "X" +
+                    "</button>" +
+                    "</li>");
+
                 $clearList.addClass(clearListDisplay);
             }
         }
@@ -41,7 +54,7 @@ $(document).ready(function () {
                     "<li class='notepad__list-item' id='" + noteID + "'>"
                     + taskMessage +
                     "<button class='btnDele' id=deleID'" + noteID + "'>" +
-                    "X" +
+                     "X" +
                     "</button>" +
                     "</li>");
 
