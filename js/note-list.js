@@ -4,7 +4,7 @@ $(document).ready(function () {
         // define variable 
         var $notepad = $('.notepad'),
             $noteList = $('.notepad__list')
-            $noteListItem = $('.notepad__list-item'),
+        $noteListItem = $('.notepad__list-item'),
             $noteForm = $('.notepad__form'),
             $noteFormInput = $('.notepad__form-input'),
             $clearList = $('.notepad__clear'),
@@ -15,6 +15,7 @@ $(document).ready(function () {
         function displayNotes() { // 显示“本地存储”里的所有条目
             for (noteCount = 0; noteCount < localStorage.length; noteCount++) {
                 var noteID = 'task-' + noteCount;
+                // todo: refresh build button too
                 // build note list: 在DOM里面找到notepad__list，加上列表的项目。该项目包括id号，还有从本地存储里读取出来的项内容
                 $noteList.append("<li class='notepad__list-item' id='" + noteID + "'>" + localStorage.getItem(noteID) + "</li>");
                 // ？ show reset button: 无法理解
@@ -28,7 +29,7 @@ $(document).ready(function () {
                 // 定义变量
                 // 确认todo项的ID是多少；确认todo项的内容是什么
                 var noteID = 'task-' + noteCount,
-                   // task = $('#' + noteID), 
+                    // task = $('#' + noteID), 
                     taskMessage = $noteFormInput.val();
 
                 // 将数据存储到“本地存储”中
@@ -37,11 +38,11 @@ $(document).ready(function () {
 
                 // 添加列表项内容：条目；按键
                 $noteList.append(
-                    "<li class='notepad__list-item' id='" + noteID + "'>" 
-                        + taskMessage + 
-                        "<button class='btnDele' id=deleID'" + noteID + "'>" +
-                        "X"+
-                        "</button>"+
+                    "<li class='notepad__list-item' id='" + noteID + "'>"
+                    + taskMessage +
+                    "<button class='btnDele' id=deleID'" + noteID + "'>" +
+                    "X" +
+                    "</button>" +
                     "</li>");
 
                 // 侦察DOM里的“clearAllBt”是否被注册了html class “clearListDisplay”
@@ -94,32 +95,37 @@ $(document).ready(function () {
             element.wrap("<strike></strike>");
         }
     }
-    
-    function getElement (element){ //找到目标元素，以供之后jQuery使用
+
+    function deleteItem(clickedEle) {
+        if ((clickedEle.parentElement.parentElement.id).indexOf("task") >= 0) { // check if the parent has id contains "task"
+            document.getElementById(clickedEle.parentElement.parentElement.id).remove();
+            // delete in storage
+            var deleteThing = clickedEle.parentElement.parentElement.id;
+            localStorage.removeItem(deleteThing);
+        }
+    }
+
+    function getElement(element) { //找到目标元素，以供之后jQuery使用
         var targetID = element.target.id;
         console.log(targetID);
         var targetEle = document.getElementById(targetID);
-        // save as jQery
-        var item = $(targetEle)
-        return item;
+
+        return targetEle;
     }
 
     // 删除线
-    $('.notepad__list').on('click', function(e){
-        strikeSwitch(getElement(e));
+    $('.notepad__list').on('click', function (e) {
+        var item = $(getElement(e));
+        strikeSwitch(item);
     });
 
     // 删除列表项
-    $('.notepad__list').on('click', function(e){
+    $('.notepad__list').on('click', function (e) {
         // capture clicked element by id
-        var targetID = e.target.id;
-        var targetEle = document.getElementById(targetID);
-        console.log("in on click");
-    // 找到ID包含有 "item" 的项目，并且删除
-    if((targetEle.parentElement.parentElement.id).indexOf("task")>=0){
-         document.getElementById(targetEle.parentElement.parentElement.id).remove();
-    }
+        var targetEle = getElement(e);
 
+        // 找到ID包含有 "item" 的项目，并且删除
+        deleteItem(targetEle);
     });
-    
+
 });// A page can't be manipulated safely until the document is "ready." 
