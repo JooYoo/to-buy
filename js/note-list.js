@@ -11,13 +11,13 @@ $(document).ready(function () {
             clearListDisplay = 'notepad__clear--display',
             noteCount = 0;
 
-
         function displayNotes() { // 显示“本地存储”里的所有条目
 
-         
-            // 遍历内存里的所有元素
-            for(var a in localStorage){
-                if(a === "length") // 在js会遍历出包括元素长度等信息，当侦测到时length时就不遍历了
+            // 创建日期
+            document.getElementById("h1Title").innerHTML = createWeekDay();
+           
+            for (var a in localStorage) { // 遍历内存里的所有元素
+                if (a === "length") // 在js会遍历出包括元素长度等信息，当侦测到时length时就不遍历了
                     break;
 
                 console.log(a, ' = ', localStorage[a]);
@@ -28,7 +28,7 @@ $(document).ready(function () {
                     "<li class='notepad__list-item' id='" + noteID + "'>"
                     + localStorage.getItem(noteID) +
                     "<button class='btnDele' id=deleID'" + noteID + "'>" +
-                     "X" +
+                    "X" +
                     "</button>" +
                     "</li>");
 
@@ -54,7 +54,7 @@ $(document).ready(function () {
                     "<li class='notepad__list-item' id='" + noteID + "'>"
                     + taskMessage +
                     "<button class='btnDele' id=deleID'" + noteID + "'>" +
-                     "X" +
+                    "X" +
                     "</button>" +
                     "</li>");
 
@@ -80,9 +80,22 @@ $(document).ready(function () {
             noteCount = 0;
         }
 
+        function createWeekDay() { // 创建日期
+            var date = new Date();
+
+            const dayOfWeek = ['Monday', 'Tuesday', 'Wednesday',
+                               'Thursday', 'Friday', 'Saturday',
+                               'Sunday'];
+
+            return dayOfWeek[date.getDay() - 1];
+        }
+
+
         function bindEvents() { // 把上面的方法连起来用。这是每次打开应用都会执行的一系列动作
             // 显示存储在“本地存储”的所有条目
             displayNotes();
+
+
 
             //创建新条目
             $noteForm.on('submit', function () {
