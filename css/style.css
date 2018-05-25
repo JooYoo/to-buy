@@ -81,8 +81,10 @@ body {
       width: 100%;
       padding: 60px 40px 15px;
       border-bottom: 1px solid #f5f4f4;
-      color: #5f5f5f;
-      font-weight: 400;
+       color:rgb(116, 116, 116);
+       text-transform: uppercase;
+       font-weight: lighter;
+      letter-spacing: 2px;
     }
   
     .notepad__form-input {
@@ -185,4 +187,9 @@ body {
       font-weight: lighter;
       font-size: 20px;
       color: gainsboro;
+    }
+
+    ::-webkit-input-placeholder{
+      color: lightgray;
+      opacity: 1;
     }
