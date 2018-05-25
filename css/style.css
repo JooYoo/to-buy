@@ -114,15 +114,11 @@ body {
     .notepad__list {
       height: 365px;
       overflow: scroll;
-      font-weight: normal;
-      font-family: Helvetica Neue, sans-serif;
     }
   
     @media screen and (max-width: 500px) {
       .notepad__list {
         height: auto;
-        font-weight: normal;
-      font-family: Helvetica Neue, sans-serif;
       }
     }
   
@@ -142,8 +138,6 @@ body {
   
     .notepad__list-item:first-of-type {
       border-top: 1px solid #f5f4f4;
-      font-weight: normal;
-      font-family: Helvetica Neue, sans-serif;
     }
   
     .notepad__clear {
