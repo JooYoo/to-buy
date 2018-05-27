@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
     var noteList = function () {
         // define variable 
@@ -12,10 +11,9 @@ $(document).ready(function () {
             noteCount = 0;
 
         function displayNotes() { // 显示“本地存储”里的所有条目
-
             // 创建日期
             document.getElementById("h1Title").innerHTML = createWeekDay();
-           
+
             for (var a in localStorage) { // 遍历内存里的所有元素
                 if (a === "length") // 在js会遍历出包括元素长度等信息，当侦测到时length时就不遍历了
                     break;
@@ -25,8 +23,8 @@ $(document).ready(function () {
                 var noteID = a;
                 //todo: 
                 $noteList.append( // 创建表格
-                    "<li class='notepad__list-item' id='" + noteID + "'>"
-                    + localStorage.getItem(noteID) +
+                    "<li class='notepad__list-item' id='" + noteID + "'>" +
+                    localStorage.getItem(noteID) +
                     "<button class='btnDele' id=deleID'" + noteID + "'>" +
                     "X" +
                     "</button>" +
@@ -51,8 +49,8 @@ $(document).ready(function () {
 
                 // 添加列表项内容：条目；按键
                 $noteList.append(
-                    "<li class='notepad__list-item' id='" + noteID + "'>"
-                    + taskMessage +
+                    "<li class='notepad__list-item' id='" + noteID + "'>" +
+                    taskMessage +
                     "<button class='btnDele' id=deleID'" + noteID + "'>" +
                     "X" +
                     "</button>" +
@@ -83,19 +81,15 @@ $(document).ready(function () {
         function createWeekDay() { // 创建日期
             var date = new Date();
 
-            const dayOfWeek = ['Monday', 'Tuesday', 'Wednesday',
-                               'Thursday', 'Friday', 'Saturday',
-                               'Sunday'];
+            const dayOfWeek = [ 'Sunday','Monday', 'Tuesday', 'Wednesday',
+                'Thursday', 'Friday', 'Saturday'];
 
-            return dayOfWeek[date.getDay() - 1];
+            return dayOfWeek[date.getDay()];
         }
-
 
         function bindEvents() { // 把上面的方法连起来用。这是每次打开应用都会执行的一系列动作
             // 显示存储在“本地存储”的所有条目
             displayNotes();
-
-
 
             //创建新条目
             $noteForm.on('submit', function () {
@@ -116,8 +110,7 @@ $(document).ready(function () {
     function strikeSwitch(element) { //点按列表项目添加或去除删除线
         if (element.parent().is("strike")) {
             element.unwrap();
-        }
-        else {
+        } else {
             element.wrap("<strike></strike>");
         }
     }
@@ -154,4 +147,4 @@ $(document).ready(function () {
         deleteItem(targetEle);
     });
 
-});// A page can't be manipulated safely until the document is "ready." 
+}); // A page can't be manipulated safely until the document is "ready."
