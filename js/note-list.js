@@ -8,7 +8,8 @@ $(document).ready(function () {
             $noteFormInput = $('.notepad__form-input'),
             $clearList = $('.notepad__clear'),
             clearListDisplay = 'notepad__clear--display',
-            noteCount = 0;
+            noteCount = 0,
+            items = [];
 
         function displayNotes() { // 显示“本地存储”里的所有条目
             // 创建日期
@@ -43,9 +44,16 @@ $(document).ready(function () {
                     // task = $('#' + noteID), 
                     taskMessage = $noteFormInput.val();
 
+                items[noteCount] = {
+                    id: noteID,
+                    message:taskMessage,
+                    isDone: false
+                }
+
                 // 将数据存储到“本地存储”中
                 // 参数需要一个ID，当然也需要内容
-                localStorage.setItem(noteID, taskMessage);
+                // localStorage.setItem(noteID, taskMessage);
+                localStorage.setItem("items",JSON.stringify(items));
 
                 // 添加列表项内容：条目；按键
                 $noteList.append(
@@ -81,8 +89,9 @@ $(document).ready(function () {
         function createWeekDay() { // 创建日期
             var date = new Date();
 
-            const dayOfWeek = [ 'Sunday','Monday', 'Tuesday', 'Wednesday',
-                'Thursday', 'Friday', 'Saturday'];
+            const dayOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
+                'Thursday', 'Friday', 'Saturday'
+            ];
 
             return dayOfWeek[date.getDay()];
         }
