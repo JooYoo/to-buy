@@ -1,4 +1,3 @@
-
 importScripts('js/cache-polyfill.js');
 
 // Install the ServiceWorker
