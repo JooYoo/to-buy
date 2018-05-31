@@ -2,7 +2,7 @@ $(document).ready(function () {
     var noteList = function () {
         // define variable 
         var $notepad = $('.notepad'),
-            $noteList = $('.notepad__list')
+            $noteList = $('.notepad__list'),
         $noteListItem = $('.notepad__list-item'),
             $noteForm = $('.notepad__form'),
             $noteFormInput = $('.notepad__form-input'),
@@ -14,18 +14,20 @@ $(document).ready(function () {
         function displayNotes() { // 显示“本地存储”里的所有条目
             // 创建日期
             document.getElementById("h1Title").innerHTML = createWeekDay();
-
-            for (var a in localStorage) { // 遍历内存里的所有元素
+            // 获取内存里的List<item>
+            let loadItems = JSON.parse(localStorage.getItem("items"));
+            //console.log("DisplayNotes: "+loadItems.length);
+            for (var a in loadItems) { // 遍历内存里的所有元素
                 if (a === "length") // 在js会遍历出包括元素长度等信息，当侦测到时length时就不遍历了
                     break;
 
-                console.log(a, ' = ', localStorage[a]);
+                console.log(a, ' = ', loadItems[a]);
 
                 var noteID = a;
                 //todo: 
                 $noteList.append( // 创建表格
                     "<li class='notepad__list-item' id='" + noteID + "'>" +
-                    localStorage.getItem(noteID) +
+                    loadItems[a].message +
                     "<button class='btnDele' id=deleID'" + noteID + "'>" +
                     "X" +
                     "</button>" +
@@ -124,20 +126,29 @@ $(document).ready(function () {
         }
     }
 
+    // todo: 这里不起作用了
     function deleteItem(clickedEle) {
+            console.log("clicked: "+clickedEle);
+            
+
         if ((clickedEle.parentElement.parentElement.id).indexOf("task") >= 0) { // check if the parent has id contains "task"
             document.getElementById(clickedEle.parentElement.parentElement.id).remove();
             // delete in storage
-            var deleteThing = clickedEle.parentElement.parentElement.id;
-            localStorage.removeItem(deleteThing);
+            var deleteId = clickedEle.parentElement.parentElement.id;
+            
+
+            items.remove(deleteId);
+            console.log("RightNow: "+items);
+            
+            //localStorage.removeItem(items[deleteId]);
         }
     }
 
     function getElement(element) { //找到目标元素，以供之后jQuery使用
         var targetID = element.target.id;
-        console.log(targetID);
+        console.log("getElement01: "+targetID);
         var targetEle = document.getElementById(targetID);
-
+        console.log("getElement02: "+targetEle);
         return targetEle;
     }
 
@@ -150,10 +161,21 @@ $(document).ready(function () {
     // 删除列表项
     $('.notepad__list').on('click', function (e) {
         // capture clicked element by id
-        var targetEle = getElement(e);
+        //var targetEle = getElement(e);
+       console.log("DianLe:"+e.targetID); 
+       //console.log("zhe li shi Items: "+items[e.target.id])
+    //    let targetId = e.target.id;
+    //let loadItems = JSON.parse(localStorage.getItem("items"));
+       console.log("loadItems:"+ loadItems[0].message);
+      
+       console.log("beforeDelete: "+ loadItems.length);
+       loadItems.splice(1,1);
+     console.log("AfterDelet: "+loadItems.length);
+     localStorage.clear();
+     //localStorage.setItem('loadItems', JSON.stringify(loadItems));
 
         // 找到ID包含有 "item" 的项目，并且删除
-        deleteItem(targetEle);
+        //deleteItem(targetEle);
     });
 
 }); // A page can't be manipulated safely until the document is "ready."
