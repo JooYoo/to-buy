@@ -2,8 +2,8 @@ $(document).ready(function () {
     var noteList = function () {
         // define variable 
         var $notepad = $('.notepad'),
-            $noteList = $('.notepad__list')
-        $noteListItem = $('.notepad__list-item'),
+            $noteList = $('.notepad__list'),
+            $noteListItem = $('.notepad__list-item'),
             $noteForm = $('.notepad__form'),
             $noteFormInput = $('.notepad__form-input'),
             $clearList = $('.notepad__clear'),
@@ -81,8 +81,9 @@ $(document).ready(function () {
         function createWeekDay() { // 创建日期
             var date = new Date();
 
-            const dayOfWeek = [ 'Sunday','Monday', 'Tuesday', 'Wednesday',
-                'Thursday', 'Friday', 'Saturday'];
+            const dayOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
+                'Thursday', 'Friday', 'Saturday'
+            ];
 
             return dayOfWeek[date.getDay()];
         }
