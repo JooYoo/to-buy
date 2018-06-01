@@ -34,7 +34,24 @@ $(document).ready(function () {
             }
         }
 
+        // refresh list the noteCount still works
+        function NoteCountManager(){
+            // get length of the storage items
+            var localStorageLength = localStorage.length;
+            
+            if(localStorageLength===0){ // case: no items in the list
+                noteCount = 0;
+            }
+            else{ // case: exist items in the list
+                noteCount = localStorage.length;
+            }
+        }
+
+
         function storeNote() { //把条目存储到“本地存储”
+            // check if list is new or already sth inside
+            NoteCountManager();
+
             // 如果文本输入框中的值不为null，那么
             if ($noteFormInput.val() !== '') {
                 // 定义变量
