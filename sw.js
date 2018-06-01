@@ -37,14 +37,16 @@ self.addEventListener('install', function(event) {
   );
 });
 
+self.addEventListener('activate',function(event){
+  console.log("[Service Worker] activating service Worker", event);
+  return self.clients.claim();
+});
+
 // Use ServiceWorker (or not) to fetch data
 self.addEventListener('fetch', function(event) {
-
   event.respondWith(
-
     // Look for something in the cache that matches the request
     caches.match(event.request).then(function(response) {
-
       // If we find something, return it
       // Otherwise, use the network instead
       return response || fetch(event.request);
