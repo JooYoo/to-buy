@@ -42,18 +42,26 @@ self.addEventListener('activate', function (event) {
   return self.clients.claim();
 });
 
+// Fetch Event 01
 // Use ServiceWorker (or not) to fetch data
-self.addEventListener('fetch', function (event) {
-  event.respondWith(
-    // Look for something in the cache that matches the request
-    caches.match(event.request).then(function (response) {
-      // If we find something, return it
-      // Otherwise, use the network instead
-      return response || fetch(event.request);
-    })
-  );
+// self.addEventListener('fetch', function (event) {
+//   event.respondWith(
+//     // Look for something in the cache that matches the request
+//     caches.match(event.request).then(function (response) {
+//       // If we find something, return it
+//       // Otherwise, use the network instead
+//       return response || fetch(event.request);
+//     })
+//   );
+// });
+
+//Fetchd Event 02
+self.addEventListener('fetch',function(event){
+  console.log('[Service Worker] fetching something......', event);
+  event.respondWith(fetch(event.request));
 });
 
+//另一个fetch
 // addEventListener('fetch', function(event) {
 //   event.respondWith(
 //     caches.match(event.request)
