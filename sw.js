@@ -1,14 +1,13 @@
-importScripts('js/cache-polyfill.js');
+var CACHE_STATIC_NAME = 'static-v1';
+var CACHE_DYNAMIC_NAME = 'dynamic-v1';
 
-// Install the ServiceWorker
 self.addEventListener('install', function (event) {
+  console.log('[Service Worker] Installing Service Worker ...', event);
   event.waitUntil(
-
-    // Open a cache
-    caches.open('v1').then(function (cache) {
-
-      // Define what we want to cache
-      return cache.addAll([
+    caches.open(CACHE_STATIC_NAME)
+    .then(function (cache) {
+      console.log('[Service Worker] Precaching App Shell');
+      cache.addAll([
         '/',
         'index.html',
         'sw.js',
@@ -24,29 +23,44 @@ self.addEventListener('install', function (event) {
         'img/icon-152.png'
       ]);
     })
-  );
+  )
 });
 
 self.addEventListener('activate', function (event) {
-  console.log("[Service Worker] activating service Worker", event);
+  console.log('[Service Worker] Activating Service Worker ....', event);
+  event.waitUntil(
+    caches.keys()
+    .then(function (keyList) {
+      return Promise.all(keyList.map(function (key) {
+        if (key !== CACHE_STATIC_NAME && key !== CACHE_DYNAMIC_NAME) {
+          console.log('[Service Worker] Removing old cache.', key);
+          return caches.delete(key);
+        }
+      }));
+    })
+  );
   return self.clients.claim();
 });
 
-// Fetch Event 01
-// Use ServiceWorker (or not) to fetch data
 self.addEventListener('fetch', function (event) {
   event.respondWith(
-    // Look for something in the cache that matches the request
-    caches.match(event.request).then(function (response) {
-      // If we find something, return it
-      // Otherwise, use the network instead
-      return response || fetch(event.request);
+    caches.match(event.request)
+    .then(function (response) {
+      if (response) {
+        return response;
+      } else {
+        return fetch(event.request)
+          .then(function (res) {
+            return caches.open(CACHE_DYNAMIC_NAME)
+              .then(function (cache) {
+                cache.put(event.request.url, res.clone());
+                return res;
+              })
+          })
+          .catch(function (err) {
+
+          });
+      }
     })
   );
 });
-
-//Fetchd Event 02
-// self.addEventListener('fetch',function(event){
-//   console.log('[Service Worker] fetching something......', event);
-//   event.respondWith(fetch(event.request));
-// });

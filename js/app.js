@@ -1,12 +1,24 @@
-// Registering ServiceWorker
-if ( 'serviceWorker' in navigator ) {
-  navigator.serviceWorker.register( '/sw.js' ).then(function(registration) {
 
-    // Registration was successful
-    console.log( 'ServiceWorker registration successful. Scope: ' + registration.scope )
-  }).catch(function(err) {
+var deferredPrompt;
 
-    // Registration failed with error
-    console.log( 'ServiceWorker registration failed. Error: ' + err);
-  });
+if (!window.Promise) {
+  window.Promise = Promise;
 }
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker
+    .register('/sw.js')
+    .then(function () {
+      console.log('Service worker registered!');
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+}
+
+window.addEventListener('beforeinstallprompt', function(event) {
+  console.log('beforeinstallprompt fired');
+  event.preventDefault();
+  deferredPrompt = event;
+  return false;
+});
